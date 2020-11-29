@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { Form, FormItem, Input, Button, Message, Container, Header, Aside, Main, Submenu, MenuItemGroup, Menu, MenuItem, Breadcrumb, BreadcrumbItem, Card, Col, Row, Table, TableColumn, Switch, Tooltip, Pagination, Dialog } from 'element-ui'
+import { Form, FormItem, Input, Button, Message, Container, Header, Aside, Main, Submenu, MenuItemGroup, Menu, MenuItem, Breadcrumb, BreadcrumbItem, Card, Col, Row, Table, TableColumn, Switch, Tooltip, Pagination, Dialog, MessageBox } from 'element-ui'
 Vue.use(Form)
 Vue.use(FormItem)
 Vue.use(Input)
@@ -25,3 +25,4 @@ Vue.use(Pagination)
 Vue.use(Dialog)
 // message要挂在到全局
 Vue.prototype.$message = Message
+Vue.prototype.$confirm = MessageBox.confirm
