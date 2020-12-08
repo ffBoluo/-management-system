@@ -93,6 +93,7 @@
                 type="warning"
                 icon="el-icon-setting"
                 size="mini"
+                @click="setRoleDige(scope.row)"
               ></el-button>
             </el-tooltip>
           </template>
@@ -173,6 +174,29 @@
         <el-button type="primary" @click="editUserInfo">确 定</el-button>
       </span>
     </el-dialog>
+    <!-- 分配角色弹窗 -->
+    <el-dialog
+      title="分配角色"
+      :visible.sync="assignDige"
+      width="50%"
+      @close="assignDigeClosed"
+    >
+      <p>当前用户：{{ userInfo.username }}</p>
+      <p>当前角色：{{ userInfo.role_name }}</p>
+      分配新角色：<el-select v-model="selectRoleId" placeholder="请选择角色">
+        <el-option
+          v-for="item in roleList"
+          :key="item.id"
+          :label="item.roleName"
+          :value="item.id"
+        >
+        </el-option>
+      </el-select>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="assignDige = false">取 消</el-button>
+        <el-button type="primary" @click="setUserInfo">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -240,11 +264,16 @@ export default {
         ],
         mobile: [{ required: true, message: "请输入手机", trigger: "blur" }],
       },
-
       // 编辑弹窗
       editDige: false,
       // 编辑用户信息
       editUser: {},
+      // 分配角色弹窗
+      assignDige: false,
+      userInfo: {},
+      // 角色选项
+      roleList: [],
+      selectRoleId: "",
     };
   },
   created() {
@@ -255,7 +284,7 @@ export default {
       const { data: res } = await this.$http.get("/users", {
         params: this.queryInfo,
       });
-      console.log(res);
+      // console.log(res);
       if (res.meta.status !== 200) return this.$message.error("错误");
       this.userList = res.data.users;
       this.total = res.data.total;
@@ -357,6 +386,34 @@ export default {
           });
         });
     },
+    // 点击分配角色按钮
+    async setRoleDige(userInfo) {
+      this.assignDige = true;
+      this.userInfo = userInfo;
+      // 展示对话框前获取角色列表
+      const { data: res } = await this.$http.get("roles");
+      if (res.meta.status !== 200)
+        return this.$message, error("获取角色列表失败");
+      console.log(res.data);
+      this.roleList = res.data;
+    },
+    // 点击确定分配角色权限
+    async setUserInfo() {
+      if (!this.selectRoleId) return this.$message.error("请选择用户角色");
+      const { data: res } = await this.$http.put(
+        `/users/${this.userInfo.id}/role`,
+        {
+          rid: this.selectRoleId,
+        }
+      );
+      console.log(res);
+      if (res.meta.status !== 200) return this.$message.error("分配角色失败");
+      this.$message.success("分配角色成功");
+      this.getUserList();
+      this.assignDige = false;
+    },
+    // 关闭分配角色弹窗触发
+    assignDigeClosed() {},
   },
 };
 </script>
