@@ -10,6 +10,7 @@ import './plugins/element'
 // 导入全局样式
 import './assets/css/base.css'
 
+
 // 导入axios网路模块
 // import { request } from './network/net'
 import axios from 'axios'
@@ -22,6 +23,10 @@ axios.interceptors.request.use(config => {
 Vue.prototype.$http = axios
 
 Vue.config.productionTip = false
+// 导入table组件
+import TreeTable from 'vue-table-with-tree-grid';
+Vue.component('tree-table', TreeTable)
+
 
 new Vue({
   router,

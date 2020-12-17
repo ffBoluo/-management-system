@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { Form, FormItem, Input, Button, Message, Container, Header, Aside, Main, Submenu, MenuItemGroup, Menu, MenuItem, Breadcrumb, BreadcrumbItem, Card, Col, Row, Table, TableColumn, Switch, Tooltip, Pagination, Dialog, MessageBox, Tag, CollapseItem, Tree, Select, Option } from 'element-ui'
+import { Form, FormItem, Input, Button, Message, Container, Header, Aside, Main, Submenu, MenuItemGroup, Menu, MenuItem, Breadcrumb, BreadcrumbItem, Card, Col, Row, Table, TableColumn, Switch, Tooltip, Pagination, Dialog, MessageBox, Tag, CollapseItem, Tree, Select, Option, Cascader } from 'element-ui'
 Vue.use(Form)
 Vue.use(FormItem)
 Vue.use(Input)
@@ -28,6 +28,7 @@ Vue.use(CollapseItem)
 Vue.use(Tree)
 Vue.use(Select)
 Vue.use(Option)
+Vue.use(Cascader)
 
 // message要挂在到全局
 Vue.prototype.$message = Message
